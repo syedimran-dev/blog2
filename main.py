@@ -60,7 +60,6 @@ class BlogPost(db.Model):
     comments = relationship("Comment", back_populates="parent_posts")
 
 
-
 class Comment(db.Model):
     __tablename__ = "comments"
     id = db.Column(db.Integer, primary_key="True")
@@ -69,7 +68,6 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     parent_posts = relationship("BlogPost", back_populates="comments")
     post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
-
 
 
 with app.app_context():
@@ -179,6 +177,7 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for('show_post', post_id=post.id))
     return render_template('add_post.html', is_edit=True, current_user=current_user, form=edit_form)
+
 
 @app.route('/delete/<int:post_id>')
 @login_required
